@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -50,42 +49,45 @@ public class WeatherListFragment extends Fragment {
         return view;
     }
 
+    public void updateCity(String newCity) {
+        if (isAdded() && getContext() != null) {
+            fetchWeatherData(newCity);
+        }
+    }
+
     private void fetchWeatherData(String city) {
         String apiKey = "715d2612";
         String url = "https://api.hgbrasil.com/weather?key=" + apiKey + "&city_name=" + city;
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url, null, response -> {
+                    try {
+                        // Limpa a lista antes de adicionar novos itens para evitar duplicatas
+                        forecastList.clear();
+                        JSONObject results = response.getJSONObject("results");
+                        JSONArray forecastArray = results.getJSONArray("forecast");
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject results = response.getJSONObject("results");
-                            JSONArray forecastArray = results.getJSONArray("forecast");
-
-                            forecastList.clear();
-                            for (int i = 0; i < forecastArray.length(); i++) {
-                                JSONObject forecastObject = forecastArray.getJSONObject(i);
-                                String date = forecastObject.getString("date");
-                                String description = forecastObject.getString("description");
-                                String max = forecastObject.getString("max");
-                                String min = forecastObject.getString("min");
-                                forecastList.add(new Forecast(date, description, max, min));
-                            }
-                            adapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        for (int i = 0; i < forecastArray.length(); i++) {
+                            JSONObject forecastObject = forecastArray.getJSONObject(i);
+                            String date = forecastObject.getString("date");
+                            String description = forecastObject.getString("description");
+                            String max = forecastObject.getString("max");
+                            String min = forecastObject.getString("min");
+                            forecastList.add(new Forecast(date, description, max, min));
                         }
-                    }
-                }, new Response.ErrorListener() {
+                        adapter.notifyDataSetChanged();
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Tratar erro
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Erro ao processar os dados da previsão.", Toast.LENGTH_SHORT).show();
                     }
+                }, error -> {
+                    // Limpa a lista para que o usuário não veja dados antigos e incorretos
+                    forecastList.clear();
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Erro: Cidade não encontrada ou problema de conexão.", Toast.LENGTH_LONG).show();
                 });
 
         queue.add(jsonObjectRequest);

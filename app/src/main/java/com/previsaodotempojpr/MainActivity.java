@@ -9,6 +9,7 @@ import android.view.View;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
 
     private String currentCity = "Joinville";
     private ViewPager2 viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
-                if(result.getContents() != null) {
-                    currentCity = result.getContents();
-                    // Recria o adapter para atualizar os fragments com a nova cidade
-                    viewPager.setAdapter(new ViewPagerAdapter(this));
+                if(result.getContents() != null && !result.getContents().isEmpty()) {
+                    this.currentCity = result.getContents();
+                    updateFragmentsWithNewCity(this.currentCity);
                 }
             });
 
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(new ViewPagerAdapter(this));
+        viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, viewPager,
@@ -54,12 +56,27 @@ public class MainActivity extends AppCompatActivity {
         ).attach();
 
         FloatingActionButton fab = findViewById(R.id.fab_scan_qrcode);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                barcodeLauncher.launch(new ScanOptions());
-            }
+        fab.setOnClickListener(view -> {
+            ScanOptions options = new ScanOptions();
+            options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
+            options.setPrompt("Aponte para o QR code da cidade");
+            options.setBeepEnabled(true);
+            barcodeLauncher.launch(options);
         });
+    }
+
+    private void updateFragmentsWithNewCity(String newCity) {
+        // Itera sobre os fragmentos que o FragmentManager da atividade conhece
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            // Verifica se o fragmento é o da lista de previsão
+            if (fragment instanceof WeatherListFragment) {
+                ((WeatherListFragment) fragment).updateCity(newCity);
+            }
+            // Verifica se o fragmento é o do mapa
+            if (fragment instanceof MapFragment) {
+                ((MapFragment) fragment).updateCity(newCity);
+            }
+        }
     }
 
     public String getCurrentCity() {
