@@ -4,4 +4,5 @@
     <string name="foto_do_desenvolvedor">Foto do desenvolvedor</string>
     <string name="abas_de_navegacao">Abas de navegação</string>
     <string name="escanear_qrcode_para_nova_cidade">Escanear QR code para nova cidade</string>
+    <string name="obter_cidade_pela_localizacao">Obter cidade pela localização atual</string>
 </resources>
