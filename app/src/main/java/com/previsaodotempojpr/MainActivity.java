@@ -4,15 +4,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String currentCity = "Joinville";
+    private ViewPager2 viewPager;
+
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+            result -> {
+                if(result.getContents() != null) {
+                    currentCity = result.getContents();
+                    // Recria o adapter para atualizar os fragments com a nova cidade
+                    viewPager.setAdapter(new ViewPagerAdapter(this));
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ViewPager2 viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new ViewPagerAdapter(this));
 
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -35,6 +52,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         ).attach();
+
+        FloatingActionButton fab = findViewById(R.id.fab_scan_qrcode);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barcodeLauncher.launch(new ScanOptions());
+            }
+        });
+    }
+
+    public String getCurrentCity() {
+        return currentCity;
     }
 
     @Override

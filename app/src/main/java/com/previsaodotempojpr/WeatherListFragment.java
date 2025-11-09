@@ -42,13 +42,15 @@ public class WeatherListFragment extends Fragment {
         adapter = new WeatherAdapter(forecastList);
         recyclerView.setAdapter(adapter);
 
-        fetchWeatherData();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            fetchWeatherData(mainActivity.getCurrentCity());
+        }
 
         return view;
     }
 
-    private void fetchWeatherData() {
-        String city = "Joinville";
+    private void fetchWeatherData(String city) {
         String apiKey = "SUA_CHAVE_API"; // SUBSTITUA PELA SUA CHAVE
         String url = "https://api.hgbrasil.com/weather?key=" + apiKey + "&city_name=" + city;
 
@@ -63,6 +65,7 @@ public class WeatherListFragment extends Fragment {
                             JSONObject results = response.getJSONObject("results");
                             JSONArray forecastArray = results.getJSONArray("forecast");
 
+                            forecastList.clear();
                             for (int i = 0; i < forecastArray.length(); i++) {
                                 JSONObject forecastObject = forecastArray.getJSONObject(i);
                                 String date = forecastObject.getString("date");
