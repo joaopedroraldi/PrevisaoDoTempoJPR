@@ -39,7 +39,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/escanear_qrcode_para_nova_cidade"
-        android:src="@android:drawable/ic_menu_camera"
-        app:tint="@android:color/white" />
+        android:src="@android:drawable/ic_menu_camera" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
