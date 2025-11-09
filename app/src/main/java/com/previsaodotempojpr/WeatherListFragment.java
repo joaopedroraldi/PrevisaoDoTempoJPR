@@ -56,7 +56,7 @@ public class WeatherListFragment extends Fragment {
     }
 
     private void fetchWeatherData(String city) {
-        String apiKey = "715d2612";
+        String apiKey = "[CHAVE DE API REMOVIDA POR QUESTÕES DE SEGURANÇA]";
         String url = "https://api.hgbrasil.com/weather?key=" + apiKey + "&city_name=" + city;
 
         RequestQueue queue = Volley.newRequestQueue(requireContext());
