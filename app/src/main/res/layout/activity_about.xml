@@ -19,21 +19,21 @@
         android:id="@+id/name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nome: Seu Nome"
+        android:text="Nome: João Pedro Raldi"
         android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/ra_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RA: Seu RA"
+        android:text="RA: 09048486"
         android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/course_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Curso: Seu Curso"
+        android:text="Curso: Sistemas Para Internet - UNIPAR"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>
