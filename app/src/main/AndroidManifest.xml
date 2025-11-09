@@ -14,6 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrevisaoDoTempoJPR"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="SUA_CHAVE_GOOGLE_MAPS" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
