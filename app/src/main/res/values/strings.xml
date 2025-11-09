@@ -5,4 +5,6 @@
     <string name="abas_de_navegacao">Abas de navegação</string>
     <string name="escanear_qrcode_para_nova_cidade">Escanear QR code para nova cidade</string>
     <string name="obter_cidade_pela_localizacao">Obter cidade pela localização atual</string>
+    <string name="navigation_drawer_open">Abrir menu de navegação</string>
+    <string name="navigation_drawer_close">Fechar menu de navegação</string>
 </resources>
