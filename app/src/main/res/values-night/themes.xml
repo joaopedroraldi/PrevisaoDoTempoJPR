@@ -4,4 +4,15 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="Theme.PrevisaoDoTempoJPR" parent="Base.Theme.PrevisaoDoTempoJPR" />
+
+    <style name="Theme.PrevisaoDoTempoJPR.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PrevisaoDoTempoJPR.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PrevisaoDoTempoJPR.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
