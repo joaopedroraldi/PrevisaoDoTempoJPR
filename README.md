@@ -25,6 +25,12 @@ O app conta com uma tela principal com abas, um menu de navegação lateral, e t
 
 ---
 
+## 🔒 Segurança
+
+**Aviso:** As chaves de API dos serviços da HG Brasil e do Google Maps foram removidas do código, pois o repositório é público. Para que o projeto funcione, seria necessário inserir chaves válidas nos respectivos locais do código.
+
+---
+
 ## 🛠️ Tecnologias e Bibliotecas Utilizadas
 
 *   **Linguagem:** Java
