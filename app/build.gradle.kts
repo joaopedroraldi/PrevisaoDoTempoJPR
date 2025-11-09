@@ -4,9 +4,7 @@ plugins {
 
 android {
     namespace = "com.previsaodotempojpr"
-    compileSdk {
-        version = 34
-    }
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.previsaodotempojpr"
@@ -30,6 +28,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
