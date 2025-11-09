@@ -41,6 +41,12 @@
             android:exported="false"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        <activity
+            android:name=".SearchActivity"
+            android:label="Pesquisar Cidade"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>

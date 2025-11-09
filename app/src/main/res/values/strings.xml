@@ -7,4 +7,5 @@
     <string name="obter_cidade_pela_localizacao">Obter cidade pela localização atual</string>
     <string name="navigation_drawer_open">Abrir menu de navegação</string>
     <string name="navigation_drawer_close">Fechar menu de navegação</string>
+    <string name="pesquisar_por_nome_de_cidade">Pesquisar por nome de cidade</string>
 </resources>

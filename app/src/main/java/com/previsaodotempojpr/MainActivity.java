@@ -60,6 +60,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
 
+    private final ActivityResultLauncher<Intent> searchLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    String city = result.getData().getStringExtra("city");
+                    if (city != null && !city.isEmpty()) {
+                        this.currentCity = city;
+                        updateFragmentsWithNewCity(this.currentCity);
+                    }
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
+    }
+
+    private void launchSearchActivity() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        searchLauncher.launch(intent);
     }
 
     private void getCurrentLocation() {
@@ -166,7 +183,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.action_scan_qrcode) {
+        if (itemId == R.id.action_search) {
+            launchSearchActivity();
+        } else if (itemId == R.id.action_scan_qrcode) {
             launchQrCodeScanner();
         } else if (itemId == R.id.action_get_location) {
             triggerLocationUpdate();
