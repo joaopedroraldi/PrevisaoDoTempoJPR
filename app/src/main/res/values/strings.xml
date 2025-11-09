@@ -2,4 +2,6 @@
     <string name="app_name">PrevisaoDoTempoJPR</string>
     <string name="logo_do_aplicativo">Logo do aplicativo</string>
     <string name="foto_do_desenvolvedor">Foto do desenvolvedor</string>
+    <string name="abas_de_navegacao">Abas de navegação</string>
+    <string name="escanear_qrcode_para_nova_cidade">Escanear QR code para nova cidade</string>
 </resources>

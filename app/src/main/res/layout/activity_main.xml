@@ -21,7 +21,8 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/abas_de_navegacao" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:contentDescription="@string/escanear_qrcode_para_nova_cidade"
         android:src="@android:drawable/ic_menu_camera"
         app:tint="@android:color/white" />
 
